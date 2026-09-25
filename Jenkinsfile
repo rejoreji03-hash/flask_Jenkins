@@ -3,23 +3,30 @@ pipeline {
 
     stages {
 
+        stage('Check Environment') {
+            steps {
+                sh 'python3 --version'
+                sh 'pip3 --version'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                bat 'pip install -r requirements.txt'
+                sh 'pip3 install -r requirements.txt'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'pytest'
+                sh 'pytest'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'mkdir build'
-                bat 'copy app.py build\\'
-                bat 'copy requirements.txt build\\'
+                sh 'mkdir -p build'
+                sh 'cp app.py build/'
+                sh 'cp requirements.txt build/'
             }
         }
     }
